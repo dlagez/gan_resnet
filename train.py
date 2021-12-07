@@ -122,19 +122,19 @@ for epoch in range(start_epoch + 1, opt.epoch + 1):
         lrd_scheduler.step()
         lrg_scheduler.step()
 
-        if epoch % 5 == 0:#每5个epoch，保存一次模型参数.
-
-            checkpointD = {
-                "net": netD.state_dict(),
-                'optimizer': optimizerD.state_dict(),
-                "epoch": epoch
-            }
-            checkpointG = {
-                "net": netG.state_dict(),
-                'optimizer': optimizerG.state_dict(),
-                "epoch": epoch
-            }
-            if not os.path.isdir("./checkpoint"):
-                os.mkdir("./checkpoint")
-            torch.save(checkpointG, './checkpoint/ckpt_latestG_%s.pth' % (str(epoch)))
-            torch.save(checkpointD, './checkpoint/ckpt_latestD_%s.pth' % (str(epoch)))
+        # if epoch % 5 == 0:#每5个epoch，保存一次模型参数.
+        # 每个epoch都保存模型参数
+        checkpointD = {
+            "net": netD.state_dict(),
+            'optimizer': optimizerD.state_dict(),
+            "epoch": epoch
+        }
+        checkpointG = {
+            "net": netG.state_dict(),
+            'optimizer': optimizerG.state_dict(),
+            "epoch": epoch
+        }
+        if not os.path.isdir("./checkpoint"):
+            os.mkdir("./checkpoint")
+        torch.save(checkpointG, './checkpoint/ckpt_latestG_%s.pth' % (str(epoch)))
+        torch.save(checkpointD, './checkpoint/ckpt_latestD_%s.pth' % (str(epoch)))
