@@ -134,7 +134,7 @@ for epoch in range(start_epoch + 1, opt.epoch + 1):
             'optimizer': optimizerG.state_dict(),
             "epoch": epoch
         }
-        if not os.path.isdir("./checkpoint"):
-            os.mkdir("./checkpoint")
-        torch.save(checkpointG, './checkpoint/ckpt_latestG_%s.pth' % (str(epoch)))
-        torch.save(checkpointD, './checkpoint/ckpt_latestD_%s.pth' % (str(epoch)))
+        if not os.path.isdir("%s/checkpoint" % opt.outf):
+            os.mkdir("%s/checkpoint" % opt.outf)
+        torch.save(checkpointG, '%s/checkpoint/ckpt_latestG_%s.pth' % opt.outf, (str(epoch)))
+        torch.save(checkpointD, '%s/checkpoint/ckpt_latestD_%s.pth' % opt.outf, (str(epoch)))
