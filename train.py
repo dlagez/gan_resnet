@@ -68,7 +68,9 @@ optimizerD = torch.optim.RMSprop(netD.parameters(), lr=opt.lrd)
 lrd_scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizerD, T_max=5, eta_min=5E-6)
 lrg_scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizerG, T_max=5, eta_min=5E-6)
 
-RESUME = False
+RESUME = True
+start_epoch = 0 #设置初始epoch大小
+
 if RESUME:
     path_checkpointD = "%s/checkpoint/ckpt_latestD.pth" % opt.outf  # 断点路径
     path_checkpointG = "%s/checkpoint/ckpt_latestG.pth" % opt.outf  # 断点路径
@@ -78,10 +80,6 @@ if RESUME:
 
     optimizerD.load_state_dict(checkpointD['optimizer'])  # 加载优化器参数
     start_epoch = checkpointD['epoch']  # 设置开始的epoch
-
-
-
-start_epoch = 0 #设置初始epoch大小
 
 for epoch in range(start_epoch + 1, opt.epoch + 1):
     with tqdm(total=len(dataloader), desc=f'Epoch {epoch}/{opt.epoch}', postfix=dict, mininterval=0.3) as pbar:
