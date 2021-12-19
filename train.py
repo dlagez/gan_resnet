@@ -76,7 +76,9 @@ if RESUME:
     path_checkpointG = "%s/checkpoint/ckpt_latestG.pth" % opt.outf  # 断点路径
     checkpointD = torch.load(path_checkpointD)  # 加载断点
     checkpointG = torch.load(path_checkpointG)  # 加载断点
+
     netD.load_state_dict(checkpointD['net'])  # 加载模型可学习参数
+    netG.load_state_dict(checkpointG['net'])  # 加载模型可学习参数
 
     optimizerD.load_state_dict(checkpointD['optimizer'])  # 加载优化器参数
     start_epoch = checkpointD['epoch']  # 设置开始的epoch
