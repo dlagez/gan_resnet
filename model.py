@@ -8,10 +8,10 @@ nz = 100
 nc = 3
 M = 32
 
-batch_size = 8  #设置一个batch的大小，注意与train.py中相同
+batch_size = 8  # 设置一个batch的大小，注意与train.py中相同
 
 class BasicBlock(nn.Module):
-    def __init__(self, in1):  #in1为输入的channel大小，BasicBlock输出等于输入channel大小
+    def __init__(self, in1):  # in1为输入的channel大小，BasicBlock输出等于输入channel大小
         super(BasicBlock, self).__init__()
         self.conv1 = nn.Conv2d(in1, in1 * 2, kernel_size=1,
                                stride=1, padding=0, bias=False)
@@ -27,11 +27,11 @@ class BasicBlock(nn.Module):
         residual = x
 
         out = self.conv1(x)
-      #  out = self.bn1(out)
+      # out = self.bn1(out)
         out = self.relu1(out)
 
         out = self.conv2(out)
-      #  out = self.bn2(out)
+      # out = self.bn2(out)
         out = self.relu2(out)
 
         out = out + residual

@@ -70,8 +70,8 @@ lrg_scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizerG, T_max=5, 
 
 RESUME = False
 if RESUME:
-    path_checkpointD = "./checkpoint/ckpt_latestD_1.pth"  # 断点路径
-    path_checkpointG = "./checkpoint/ckpt_latestG_1.pth"  # 断点路径
+    path_checkpointD = "%s/checkpoint/ckpt_latestD.pth" % opt.outf  # 断点路径
+    path_checkpointG = "%s/checkpoint/ckpt_latestG.pth" % opt.outf  # 断点路径
     checkpointD = torch.load(path_checkpointD)  # 加载断点
     checkpointG = torch.load(path_checkpointG)  # 加载断点
     netD.load_state_dict(checkpointD['net'])  # 加载模型可学习参数
@@ -136,5 +136,5 @@ for epoch in range(start_epoch + 1, opt.epoch + 1):
         }
         if not os.path.isdir("%s/checkpoint" % opt.outf):
             os.mkdir("%s/checkpoint" % opt.outf)
-        torch.save(checkpointG, '%s/checkpoint/ckpt_latestG_%s.pth' % opt.outf, (str(epoch)))
-        torch.save(checkpointD, '%s/checkpoint/ckpt_latestD_%s.pth' % opt.outf, (str(epoch)))
+        torch.save(checkpointG, '%s/checkpoint/ckpt_latestG_%s.pth' % (opt.outf, str(epoch)))
+        torch.save(checkpointD, '%s/checkpoint/ckpt_latestD_%s.pth' % (opt.outf, str(epoch)))
