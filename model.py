@@ -8,14 +8,14 @@ nz = 100
 nc = 3
 M = 32
 
-batch_size = 8  # 设置一个batch的大小，注意与train.py中相同
+batch_size = 180  # 设置一个batch的大小，注意与train.py中相同
 
 class BasicBlock(nn.Module):
     def __init__(self, in1):  # in1为输入的channel大小，BasicBlock输出等于输入channel大小
         super(BasicBlock, self).__init__()
         self.conv1 = nn.Conv2d(in1, in1 * 2, kernel_size=1,
                                stride=1, padding=0, bias=False)
-        self.bn1 =nn.BatchNorm2d(in1*2)
+        self.bn1 = nn.BatchNorm2d(in1*2)
         self.relu1 = nn.LeakyReLU(0.2)
 
         self.conv2 = nn.Conv2d(in1*2, in1, kernel_size=3,
@@ -46,12 +46,12 @@ class netD(nn.Module):
         self.layer1 = nn.Sequential(
             BasicBlock(64),
             nn.AvgPool2d(3, 2),
-            BasicBlock(64),
+            # BasicBlock(64),
         )
 
         self.layer2 = nn.Sequential(
             nn.AvgPool2d(3,2),
-            BasicBlock(64)
+            # BasicBlock(64)
         )
 
         self.layer3 = nn.Sequential(

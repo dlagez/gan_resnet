@@ -1,2 +1,4 @@
 .idea/
 .*
+/resnetimg/
+__pycache__/

@@ -22,7 +22,7 @@ def get_lr(optimizer):
         return param_group['lr']
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--batchSize', type=int, default=8)
+parser.add_argument('--batchSize', type=int, default=180)
 parser.add_argument('--imageSize', type=int, default=64)
 parser.add_argument('--nz', type=int, default=100, help='size of the latent z vector')
 parser.add_argument('--ngf', type=int, default=64)
@@ -68,7 +68,7 @@ optimizerD = torch.optim.RMSprop(netD.parameters(), lr=opt.lrd)
 lrd_scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizerD, T_max=5, eta_min=5E-6)
 lrg_scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizerG, T_max=5, eta_min=5E-6)
 
-RESUME = True
+RESUME = False
 start_epoch = 0 #设置初始epoch大小
 
 if RESUME:
@@ -122,19 +122,19 @@ for epoch in range(start_epoch + 1, opt.epoch + 1):
         lrd_scheduler.step()
         lrg_scheduler.step()
 
-        # if epoch % 5 == 0:#每5个epoch，保存一次模型参数.
-        # 每个epoch都保存模型参数
-        checkpointD = {
-            "net": netD.state_dict(),
-            'optimizer': optimizerD.state_dict(),
-            "epoch": epoch
-        }
-        checkpointG = {
-            "net": netG.state_dict(),
-            'optimizer': optimizerG.state_dict(),
-            "epoch": epoch
-        }
-        if not os.path.isdir("%s/checkpoint" % opt.outf):
-            os.mkdir("%s/checkpoint" % opt.outf)
-        torch.save(checkpointG, '%s/checkpoint/ckpt_latestG_%s.pth' % (opt.outf, str(epoch)))
-        torch.save(checkpointD, '%s/checkpoint/ckpt_latestD_%s.pth' % (opt.outf, str(epoch)))
+        if epoch % 5 == 0:#每5个epoch，保存一次模型参数.
+            # 每个epoch都保存模型参数
+            checkpointD = {
+                "net": netD.state_dict(),
+                'optimizer': optimizerD.state_dict(),
+                "epoch": epoch
+            }
+            checkpointG = {
+                "net": netG.state_dict(),
+                'optimizer': optimizerG.state_dict(),
+                "epoch": epoch
+            }
+            if not os.path.isdir("%s/checkpoint" % opt.outf):
+                os.mkdir("%s/checkpoint" % opt.outf)
+            torch.save(checkpointG, '%s/checkpoint/ckpt_latestG_%s.pth' % (opt.outf, str(epoch)))
+            torch.save(checkpointD, '%s/checkpoint/ckpt_latestD_%s.pth' % (opt.outf, str(epoch)))
